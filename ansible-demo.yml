@@ -1,0 +1,29 @@
+- name: A playbook to install Docker on a VM
+  hosts: localhost
+  user: ubuntu
+  become: yes
+  
+  tasks:
+  - name: Create an empty file using Ansible/ install minikube
+    shell:
+     cmd: curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+  - name: Change file ownership
+    file:
+      path: ./minikube
+      owner: ubuntu
+      group: ubuntu
+      mode: '+x'
+  - name: Copy a file in Ansible
+    copy:
+      src: ./minikube
+      dest: /usr/local/bin/ 
+      mode: '+x' 
+  - name: start minikube
+    become: no
+    shell:
+      cmd: minikube start
+  
+
+ 
+
+
